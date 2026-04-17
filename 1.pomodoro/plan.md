@@ -3,7 +3,7 @@
 ## Phase 1 — 静的UI（土台）
 **目標**: モック画像を忠実に再現した動かないHTML/CSS画面を作る
 
-- ディレクトリ構成を `architecture.md` に沿って作成
+- ディレクトリ構成をリポジトリ直下の `architecture.md` に沿って作成
 - `templates/index.html`: タイマー表示・ボタン・今日の進捗カードのレイアウト
 - `static/css/styles.css`: 円形プログレス・ボタンデザイン・紫系カラースキーム
 - `app.py`: Flaskで `/` を返すだけのルート
