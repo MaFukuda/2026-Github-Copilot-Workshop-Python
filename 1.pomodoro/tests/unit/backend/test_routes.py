@@ -2,6 +2,8 @@
 バックエンドテスト - Flask ルート と HTML レスポンステスト
 """
 
+import re
+
 import pytest
 
 
@@ -51,12 +53,18 @@ class TestIndexRoute:
         assert '集中時間' in html
 
     def test_index_contains_progress_values(self, client):
-        """進捗カードの値（4、1時間40分）が含まれるか"""
+        """進捗カードの値（4、1時間40分）が progress-number 要素に含まれるか"""
         response = client.get('/')
         html = response.get_data(as_text=True)
-        # 最初のダミーデータをチェック
-        assert '4' in html  # 完了数
-        assert '1時間40分' in html  # 集中時間
+        # 最初のダミーデータを、意図した要素内の値としてチェック
+        assert re.search(
+            r'<[^>]+class="[^"]*\bprogress-number\b[^"]*"[^>]*>\s*4\s*</',
+            html,
+        ), '完了数 "4" が progress-number 要素内に見つかりません'
+        assert re.search(
+            r'<[^>]+class="[^"]*\bprogress-number\b[^"]*"[^>]*>\s*1時間40分\s*</',
+            html,
+        ), '集中時間 "1時間40分" が progress-number 要素内に見つかりません'
 
     def test_index_contains_circular_progress(self, client):
         """円形プログレスバー（SVG）が含まれるか"""
